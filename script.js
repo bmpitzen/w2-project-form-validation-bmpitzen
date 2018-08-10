@@ -1,9 +1,15 @@
 console.log('Add validation!');
 document.getElementById('parking-form').addEventListener('submit', function (event) {
     event.preventDefault()
-// debugger
+
+
+var inputs = document.getElementsByTagName('input')
+
+var invalidArray = []
+
+
 function getInputName(input){
-    switch(input.Id) {
+    switch(input.id) {
         case "name":
             return "Name"
         case "car-year":
@@ -25,23 +31,27 @@ function getInputName(input){
     }
 }
 
-function addErrorMessage(invalidArray){
-    for (invalidInput of invalidArray){
-        addErrorMessage(invalidInput) 
-            errorDiv.innerText (getInputName (invalidInput) + " is a required field.")
-    }
+function addErrorMessage(input){
+    // debugger
     var errorDiv = document.createElement('div')
     errorDiv.classList.add('input-hint')
-    errorDiv.innerText = errorMsgs.join("| ")
-    input.parentElement.appendChild(errorDiv);
+    if (input.id.startsWith('car') ){
+        errorDiv.style.marginBottom = 0;
+        input.parentElement.parentElement.appendChild(errorDiv);
+        
+    } else {
+        input.parentElement.appendChild(errorDiv);
+    }    
+    errorDiv.innerText = getInputName(input) + " is a required field."
 }
 
-    var inputs = document.getElementsByTagName('input')
-
-    var invalidArray = []
+    
 
     for (input of inputs) {
         input.parentElement.classList.remove('input-invalid', 'input-valid')
+    }
+    for (div of document.querySelectorAll('.input-hint')){
+        div.remove()
     }
 
     for (input of inputs) {
@@ -62,7 +72,9 @@ function addErrorMessage(invalidArray){
     }
 
     
-    errorMessage(input)
+    for (invalidInput of invalidArray){
+        addErrorMessage(invalidInput)
+    }
 
 console.log(invalidArray)
 })
