@@ -3,54 +3,54 @@ document.getElementById('parking-form').addEventListener('submit', function (eve
     event.preventDefault()
 
 
-var inputs = document.getElementsByTagName('input')
+    var inputs = document.getElementsByTagName('input')
 
-var invalidArray = []
+    var invalidArray = []
 
 
-function getInputName(input){
-    switch(input.id) {
-        case "name":
-            return "Name"
-        case "car-year":
-            return "Year"
-        case "car-make":
-            return "Make"
-        case "car-model":
-            return "Model"
-        case "start-date":
-            return "Start date"
-        case "days":
-            return "Number of days"
-        case "credit-card":
-            return "Credit card number"
-        case "cvv":
-            return "CVV"
-        case "expiration":
-            return "Expiration date"
+    function getInputName(input) {
+        switch (input.id) {
+            case "name":
+                return "Name"
+            case "car-year":
+                return "Year"
+            case "car-make":
+                return "Make"
+            case "car-model":
+                return "Model"
+            case "start-date":
+                return "Start date"
+            case "days":
+                return "Number of days"
+            case "credit-card":
+                return "Credit card number"
+            case "cvv":
+                return "CVV"
+            case "expiration":
+                return "Expiration date"
+        }
     }
-}
 
-function addErrorMessage(input){
-    // debugger
-    var errorDiv = document.createElement('div')
-    errorDiv.classList.add('input-hint')
-    if (input.id.startsWith('car') ){
-        errorDiv.style.marginBottom = 0;
-        input.parentElement.parentElement.appendChild(errorDiv);
-        
-    } else {
-        input.parentElement.appendChild(errorDiv);
-    }    
-    errorDiv.innerText = getInputName(input) + " is a required field."
-}
+    function addErrorMessage(input) {
+        // debugger
+        var errorDiv = document.createElement('div')
+        errorDiv.classList.add('input-hint')
+        if (input.id.startsWith('car')) {
+            errorDiv.style.marginBottom = 0;
+            input.parentElement.parentElement.appendChild(errorDiv);
 
-    
+        } else {
+            input.parentElement.appendChild(errorDiv);
+        }
+        errorDiv.innerText = getInputName(input) + " is a required field."
+    }
+
+
 
     for (input of inputs) {
         input.parentElement.classList.remove('input-invalid', 'input-valid')
     }
-    for (div of document.querySelectorAll('.input-hint')){
+    for (div of document.querySelectorAll('.input-hint')) {
         div.remove()
     }
 
@@ -71,10 +71,10 @@ function addErrorMessage(input){
         }
     }
 
-    
-    for (invalidInput of invalidArray){
+
+    for (invalidInput of invalidArray) {
         addErrorMessage(invalidInput)
     }
 
-console.log(invalidArray)
+    console.log(invalidArray)
 })
