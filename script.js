@@ -2,16 +2,9 @@ console.log('Add validation!');
 document.getElementById('parking-form').addEventListener('submit', function (event) {
     event.preventDefault()
 
-
     var inputs = document.getElementsByTagName('input')
 
     var invalidArray = []
-
-    // var carYear = document.getElementById('car-year').value
-
-    // if (typeOf.carYear === "number"){
-
-    // }
 
     function getInputName(input) {
         switch (input.id) {
@@ -37,7 +30,6 @@ document.getElementById('parking-form').addEventListener('submit', function (eve
     }
 
     function addErrorMessage(input) {
-        // debugger
         var errorDiv = document.createElement('div')
         errorDiv.classList.add('input-hint')
         if (input.id.startsWith('car')) {
@@ -50,11 +42,10 @@ document.getElementById('parking-form').addEventListener('submit', function (eve
         errorDiv.innerText = getInputName(input) + " is a required field."
     }
 
-
-
     for (input of inputs) {
         input.parentElement.classList.remove('input-invalid', 'input-valid')
     }
+
     for (div of document.querySelectorAll('.input-hint')) {
         div.remove()
     }
@@ -76,21 +67,17 @@ document.getElementById('parking-form').addEventListener('submit', function (eve
             }
         }
     }
-    // function parse(string, base){
-    // parseInt(string, 10)
-    // }
 
     for (invalidInput of invalidArray) {
         addErrorMessage(invalidInput)
     }
-
 
     function validInput(input) {
         if (input.id === 'car-year') {
             var parsedNum = parseInt(input.value, 10)
             if (typeof parsedNum === 'number') {
                 if (parsedNum > '1900') {
-                    var currentYear = (new Date()).getFullYear()+1
+                    var currentYear = (new Date()).getFullYear() + 1
                     if (parsedNum <= currentYear + 1) {
                         input.parentElement.classList.add('input-valid')
                     } else {
@@ -100,26 +87,39 @@ document.getElementById('parking-form').addEventListener('submit', function (eve
                 } else {
                     input.parentElement.classList.add('input-invalid')
                     invalidArray.push(input)
-                } 
+                }
             } else {
                 input.parentElement.classList.add('input-invalid')
                 invalidArray.push(input)
-            } 
-        } else if (input.id === 'start-date'){
+            }
+        } else if (input.id === 'start-date') {
             var currentDate = new Date()
             var parkDate = new Date(input.value)
-            console.log(currentDate)
-            console.log(input.value, "parkdate")
-            if (parkDate.getTime >= currentDate.getTime){
+            if (parkDate.getTime() >= currentDate.getTime()) {
                 input.parentElement.classList.add('input-valid')
             } else {
                 input.parentElement.classList.add('input-invalid')
                 invalidArray.push(input)
             }
-        }
-        
-        else {
+        } else if (input.id === 'days') {
+            var parsedDays = parseInt(input.value, 10)
+            if (typeof parsedDays === 'number') {
+                if (parsedDays >= '1' && parsedDays <= '30') {
+                    input.parentElement.classList.add('input-valid')
+                } else {
+                    input.parentElement.classList.add('input-invalid')
+                    invalidArray.push(input)
+                }
+            }
+        } else if (input.id === 'cvv') {
+            if (/\d{3}/.test(input.value)) {
+                input.parentElement.classList.add('input-valid')
+            } else {
+                input.parentElement.classList.add('input-invalid')
+                invalidArray.push(input)
+            }
+        } else {
             input.parentElement.classList.add('input-valid')
         }
-}
+    }
 })
